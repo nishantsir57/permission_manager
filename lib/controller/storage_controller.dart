@@ -1,10 +1,9 @@
-
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class CameraController extends GetxController
+class StorageController extends GetxController
 {
-  Permission permission=Permission.camera;
+  Permission permission=Permission.manageExternalStorage;
   RxInt denyCount=0.obs;
   checkStatus()async
   {
@@ -13,11 +12,9 @@ class CameraController extends GetxController
   requestPermission() async
   {
     denyCount++;
-    try{
+    try {
       await permission.request();
-
-    }catch(e)
-    {
+    } catch (e) {
       print(e);
       await openAppSettings();
     }
