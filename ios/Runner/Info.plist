@@ -21,6 +21,12 @@
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
+	<key>NSCameraUsageDescription</key>
+    <string>To capture profile photo please grant camera access</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Kraken need the location permission to connect the nearby bluetooth device </string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>App needs access to photo lib for profile images</string>
 	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
