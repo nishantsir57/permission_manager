@@ -6,24 +6,29 @@ class CameraController extends GetxController
 {
   Permission permission=Permission.camera;
   RxInt denyCount=0.obs;
+  RxBool isAllowed=false.obs;
   checkStatus()async
   {
-    return await permission.status;
+    PermissionStatus status=await permission.status;
+    if(status.isGranted)
+      isAllowed.value=true;
+    return status;
   }
   requestPermission() async
   {
     denyCount++;
     try{
       await permission.request();
-
+      await checkStatus();
     }catch(e)
     {
-      print(e);
+
       await openAppSettings();
     }
   }
   requestFromSettings()async
   {
     await openAppSettings();
+    await checkStatus();
   }
 }

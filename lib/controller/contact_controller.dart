@@ -5,22 +5,30 @@ class ContactController extends GetxController
 {
   Permission permission=Permission.contacts;
   RxInt denyCount=0.obs;
+  RxBool isAllowed=false.obs;
   checkStatus()async
   {
-    return await permission.status;
+    PermissionStatus status=await permission.status;
+    if(status.isGranted)
+      isAllowed.value=true;
+
+    return status;
   }
   requestPermission() async
   {
     denyCount++;
-    try {
+    try{
       await permission.request();
-    } catch (e) {
-      print(e);
+      await checkStatus();
+    }catch(e)
+    {
+
       await openAppSettings();
     }
   }
   requestFromSettings()async
   {
     await openAppSettings();
+    await checkStatus();
   }
 }

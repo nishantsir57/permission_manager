@@ -6,22 +6,30 @@ class LocationController extends GetxController
   Permission permission=Permission.locationWhenInUse;
   Permission permission1=Permission.locationAlways;
   RxInt denyCount=0.obs;
+  RxBool isAllowed=false.obs;
   checkStatus()async
   {
-    return await permission.status;
+    PermissionStatus status=await permission.status;
+    if(status.isGranted)
+      isAllowed.value=true;
+
+    return status;
   }
   requestPermission() async
   {
     denyCount++;
-    try {
+    try{
       await permission.request();
-      await permission1.request();
-    } catch (e) {
+      await checkStatus();
+    }catch(e)
+    {
+
       await openAppSettings();
     }
   }
   requestFromSettings()async
   {
     await openAppSettings();
+    await checkStatus();
   }
 }
